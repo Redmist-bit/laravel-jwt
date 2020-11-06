@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\BarangsController;
+use App\Http\Controllers\GudangsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,8 @@ Route::group(["middleware"=>"auth.jwt"], function(){
     Route::post("logout",[AuthController::class, 'logout']);
     Route::resource("customers", CustomersController::class);
     Route::resource("barang", BarangsController::class);
+    Route::resource("gudangs", GudangsController::class);
+
     // Route::get("customers",[CustomersController::class, 'index']);
 });
 // Route::resource("customers", CustomersController::class);
