@@ -52,5 +52,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Customers::class,'created_by','id');
     }
+    public function barangs()
+    {
+        return $this->hasMany(Barangs::class,'created_by','id');
+    }
+    public function gudangs()
+    {
+        return $this->hasMany(Gudangs::class,'created_by','id');
+    }
 }
 

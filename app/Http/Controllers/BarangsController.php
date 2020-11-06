@@ -61,8 +61,8 @@ class BarangsController extends Controller
         $barang->partnumber1 = $request->partnumber1;
         $barang->partnumber2 = $request->partnumber2;
         $barang->kendaraan = $request->kendaraan;
-        $barang->kdsuplier = $request->kdsuplier;
-        $barang->dimensi = $request->dimnesi;
+        $barang->kdsupplier = $request->kdsupplier;
+        $barang->dimensi = $request->dimensi;
         $barang->aktif = $request->aktif;
         
         if ($this->user->barangs()->save($barang)){
@@ -84,10 +84,10 @@ class BarangsController extends Controller
      * @param  \App\Models\Barangs  $barangs
      * @return \Illuminate\Http\Response
      */
-    public function show(Barangs $barangs)
+    public function show(Barangs $barangs, $id)
     {
         //
-        $barangs = Baranngs::find($id);
+        $barangs = Barangs::find($id);
         return $barangs;
     }
 
@@ -109,7 +109,7 @@ class BarangsController extends Controller
      * @param  \App\Models\Barangs  $barangs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Barangs $barangs)
+    public function update(Request $request, Barangs $barangs, $id)
     {
         $this->validate($request, [
             "kode" => "required",
@@ -128,11 +128,22 @@ class BarangsController extends Controller
         $barang->partnumber1 = $request->partnumber1;
         $barang->partnumber2 = $request->partnumber2;
         $barang->kendaraan = $request->kendaraan;
-        $barang->kdsuplier = $request->kdsuplier;
-        $barang->dimensi = $request->dimnesi;
+        $barang->kdsupplier = $request->kdsupplier;
+        $barang->dimensi = $request->dimensi;
         $barang->aktif = $request->aktif;
-
+        
+        if($this->user->Barangs()->save($barang)){
+            return response()->json([
+                "status"=>true,
+                "customers"=> $barang
+            ]);
+    }else{
+        return response()->json([
+            "status"=>false,
+            "Message"=>"gagal update"
+        ], 500);
     }
+}
 
     /**
      * Remove the specified resource from storage.
@@ -140,8 +151,19 @@ class BarangsController extends Controller
      * @param  \App\Models\Barangs  $barangs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Barangs $barangs)
+    public function destroy(Barangs $barangs, $id)
     {
-        //
+        $barangs = Barangs::find($id);
+        if ($barangs->delete()){
+            return response()->json([
+                "status"=> true,
+                "barangs"=> $barangs
+            ]);
+        } else {
+            return response()->json([
+                "status"=> false,
+                "Message"=> "gagal delete"
+            ]);
+        }
     }
 }
